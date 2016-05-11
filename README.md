@@ -24,6 +24,10 @@ Based on simulation statistics, what is the best configuration among config 1~12
 
 
 # 좋은 캐시의 조건
---> AMAT( Average Memory Access Time)이 작아야함.
+--> AMAT( Average Memory Access Time)이 작아야하고 Energy Efficiency, Area Efficiency가 좋아야함.
 
 AMAT = Hit Time + Miss rate*Miss Penalty
+
+n-way associative cache에서 n이 커질수록 Miss rate는 줄어들지만 Hit time이 늘고 Energy Efficiency, Area Efficiency가 감소.
+
+Cache Replacement Policy Affects Miss Rate!!
