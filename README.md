@@ -21,3 +21,16 @@ Based on simulation statistics, what is the best configuration among config 1~8 
 <br/>
 <b>Extra 2)</b>
 Based on simulation statistics, what is the best configuration among config 1~12 for each benchmarks? Write your detailed answer and explanation on report.xxx
+
+<h1> AMAT Calculate</h1>
+<p>
+𝑨𝑴𝑨𝑻 = 𝑻𝒉𝒊𝒕 + 𝒎𝒊𝒔𝒔 𝒓𝒂𝒕𝒆 × (𝒎𝒊𝒔𝒔 𝒑𝒆𝒏𝒂𝒍𝒕𝒚)
+Assumption
+ At least one of two must be true.
+• The cache uses ‘Write Back’
+• The cache uses 'write buffer'
+Terms
+ AMAT : Average Memory Access Time
+ People usually use the term ‘miss rate’ rather than 'hit rate'
+
+</p>
