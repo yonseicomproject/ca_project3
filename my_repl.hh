@@ -16,7 +16,7 @@ class MyRepl : public BaseSetAssoc
 {
   public:
     /** Convenience typedef. */
-    typedef MyreplParams Params;
+    typedef MyReplParams Params;
 
     /**
      * Construct and initialize this tag store.
