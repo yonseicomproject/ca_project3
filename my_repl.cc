@@ -13,11 +13,9 @@
 MyRepl::MyRepl(const Params *p)
     : BaseSetAssoc(p)
 {
-    int* rrip_bits = new int[assoc];
-    for (int i = -; i<assoc; i++)
+    rrip_bits = new int[assoc];
+    for (int i = 0; i<assoc; i++)
         rrip_bits[i] = RRPV_SIZE-1;
-
-
 }
 
 CacheBlk*
@@ -27,7 +25,7 @@ MyRepl::accessBlock(Addr addr, bool is_secure, Cycles &lat, int master_id)
 
     if (blk != NULL) {
         // move this block to head of the MRU list
-        blk->rrpv --;
+        blk->rrpv =0;
        // sets[blk->set].moveToHead(blk);
         DPRINTF(CacheRepl, "set %x: moving blk %x (%s) to MRU\n",
                 blk->set, regenerateBlkAddr(blk->tag, blk->set),
@@ -40,18 +38,20 @@ MyRepl::accessBlock(Addr addr, bool is_secure, Cycles &lat, int master_id)
 CacheBlk*
 MyRepl::findVictim(Addr addr)
 {
+    CacheBlk *blk = BaseSetAssoc::findVictim(addr);
+    //    blk = sets[set].blks[index];
     int set = extractSet(addr);
     // grab a replacement candidate
 
-    BlkType *blk = NULL;
     for (int i = 0; i<assoc; i++)
     {
 
-     BlkType *b = sets[set].blks[index];
-        if(!b->isValid())
+
+       //blk = sets[set].blks[index];
+        if(!blk->isValid() || !blk)
         {
-            rrip_bits[i] = RRPV_SIZE-1;
-            return b;
+            rrip_bits[i] = RRPV_SIZE/2;
+            return blk;
         
         }
     }
@@ -60,14 +60,16 @@ MyRepl::findVictim(Addr addr)
     {
         for( int i = 0; i<assoc; i++)
         {
-            BlkType *b = sets[set].blks[index];
+            //blk = sets[set].blks[index];
             if(rrip_bits[pointer] == RRPV_SIZE-1)
             {
                 int index = pointer;
-                pointer = (pointer +1) % assoc;
-                rrip_bits[index] = RRPV_SIZE-1;
+                //blk = sets[set].blks[index];
+               // pointer = (pointer +1) % assoc;
+                rrip_bits[index] = RRPV_SIZE/2;
 
-                return b;
+                blk = sets[set].blks[index];
+                return blk;
             }
             pointer = (pointer+1)%assoc;
         }
@@ -80,6 +82,7 @@ MyRepl::findVictim(Addr addr)
         DPRINTF(CacheRepl, "set %x: selecting blk %x for replacement\n",
                 set, regenerateBlkAddr(blk->tag, set));
     }
+    return blk;
 }
 
 void
@@ -109,6 +112,6 @@ MyReplParams::create()
     return new MyRepl(this);
 }
 
-MyRepl*::~MyRepl{
+MyRepl::~MyRepl(){
     delete [] rrip_bits;
 }

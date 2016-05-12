@@ -26,7 +26,7 @@ class MyRepl : public BaseSetAssoc
     /**
      * Destructor
      */
-    ~MyRepl() {}
+    ~MyRepl();
 
     //light
     /*
@@ -45,6 +45,7 @@ class MyRepl : public BaseSetAssoc
     CacheBlk* findVictim(Addr addr);
     void insertBlock(PacketPtr pkt, BlkType *blk);
     void invalidate(CacheBlk *blk);
+    int* rrip_bits;
 };
 
 #endif // __MEM_CACHE_TAGS_MYREPL_HH__
